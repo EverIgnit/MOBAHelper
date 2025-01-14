@@ -3,7 +3,8 @@ namespace Evoloor.MLBBCore.Drafter;
 public static class DraftPlayersOptions
 {
     public static Player Evoloor { get; } = new(
-        heroPool: [
+        heroPool:
+        [
             (Heroes.Harith, Lane.Mid),
             (Heroes.Harith, Lane.Gold),
             (Heroes.Zhask, Lane.Gold),

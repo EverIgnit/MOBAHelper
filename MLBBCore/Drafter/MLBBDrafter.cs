@@ -2,7 +2,7 @@
 namespace Evoloor.MLBBCore.Drafter;
 public class Player
 {
-    public Player((Hero, Lane)[] heroPool, string anyName, bool preferRealName)
+    public Player((Hero hero, Lane lane)[] heroPool, string anyName, bool preferRealName)
     {
         HeroPool = heroPool;
         PreferRealName = preferRealName;
@@ -82,9 +82,9 @@ public class TeamGrades : HeroGrades
 }
 public static class TeamTiers
 {
-    public static TeamTier Imba { get; } = new();
+    // public static TeamTier Imba { get; } = new();
 }
 public class TeamTier : HeroGrades
 {
-
+    protected TeamTier() : base(){ }
 }

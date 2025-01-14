@@ -31,6 +31,7 @@ public class HeroDymanicGraded : Hero
 }
 public class HeroGrades
 {
+    protected HeroGrades() { }
     public int PhisDamage { get; init; }
     public int MagicDamage { get; init; }
     public int PureDamage { get; init; }
