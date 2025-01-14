@@ -87,6 +87,17 @@ public class HeroGrades
 
     }
 }
+class HeroExperimental
+{
+    public int Damage { get; set; }
+    public DamageType DamageType { get; set; }
+}
+enum DamageType
+{
+    AOE,
+    DPS,
+    Solo
+}
 public enum Build
 {
     Durubility,
