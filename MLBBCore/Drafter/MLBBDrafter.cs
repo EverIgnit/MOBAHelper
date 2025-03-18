@@ -52,7 +52,7 @@ public class TeamComp
     public DraftedGoldLaner Golder { get; init; }
     public DraftedPlayer[] DraftedPlayers { get; }
 }
-public class TeamGrades : HeroGrades
+public class TeamGrades : HeroAttributes
 {
     public TeamGrades(TeamComp team)
     {
@@ -69,11 +69,11 @@ public class TeamGrades : HeroGrades
                 PureDamage += grade.PureDamage;
                 TurretDamage += grade.TurretDamage;
                 LaneClear += grade.LaneClear;
-                CC += grade.CC;
+                CCAmount += grade.CCAmount;
                 Early += grade.Early;
                 Late += grade.Late;
                 ReinforcementRoam += grade.ReinforcementRoam;
-                Backline += grade.Backline;
+                ReachingFarEvaluation += grade.ReachingFarEvaluation;
                 Durability += grade.Durability;
                 UniqueAbility += grade.UniqueAbility;
             }
@@ -84,7 +84,7 @@ public static class TeamTiers
 {
     // public static TeamTier Imba { get; } = new();
 }
-public class TeamTier : HeroGrades
+public class TeamTier : HeroAttributes
 {
     protected TeamTier() : base(){ }
 }

@@ -57,7 +57,7 @@ public static class Heroes
         name: nameof(Harith),
         traits: [
             HeroTrait.Mobility,
-            HeroTrait.LowBaseDurability,
+            HeroTrait.Oneshotable,
             HeroTrait.AOEBurst,
             HeroTrait.SoloDmg,
         ]);
@@ -94,7 +94,7 @@ public static class Heroes
         traits: [
             HeroTrait.AOEBurst,
             HeroTrait.LowMobility,
-            HeroTrait.LowBaseDurability,
+            HeroTrait.Oneshotable,
             HeroTrait.GatherCC,
         ]);
     public static HeroStableGraded Lylia { get; }
@@ -138,7 +138,7 @@ public static class Heroes
         name: nameof(Xavier),
         traits:
         [
-            HeroTrait.LowBaseDurability,
+            HeroTrait.Oneshotable,
             HeroTrait.InstantCC,
             HeroTrait.AOEBurst,
             HeroTrait.Mobility, // sure?
@@ -152,7 +152,7 @@ public static class Heroes
         traits: [
             HeroTrait.SoloDmg,
             HeroTrait.Mobility,
-            HeroTrait.LowBaseDurability,
+            HeroTrait.Oneshotable,
             HeroTrait.InstantCC,
         ]);
     public static HeroStableGraded Zhuxin { get; }

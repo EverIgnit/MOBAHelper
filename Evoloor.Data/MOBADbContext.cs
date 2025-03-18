@@ -19,9 +19,9 @@ public abstract class MOBADbContext<TMatch, TMatchPlayer, TAccount, TChampion, T
         modelBuilder.Entity<IStaticData>()
             .HasKey(e => e.Name);
         foreach (var property in modelBuilder.Model.GetEntityTypes()
-            .SelectMany(entityType=>
+            .SelectMany(entityType =>
                 entityType.GetProperties()
-                .Where(property=>property.ClrType == typeof(string))))
+                .Where(property => property.ClrType == typeof(string))))
             property.SetMaxLength(SHORT_STR_LENGTH);
         base.OnModelCreating(modelBuilder);
     }
