@@ -53,14 +53,21 @@ public static class Heroes
     public static HeroStableGraded Gusion { get; }
     public static HeroStableGraded Hanabi { get; }
     public static HeroStableGraded Hanzo { get; }
-    public static HeroStableGraded Harith { get; } = new(
-        name: nameof(Harith),
-        traits: [
-            HeroTrait.Mobility,
-            HeroTrait.Oneshotable,
-            HeroTrait.AOEBurst,
-            HeroTrait.SoloDmg,
-        ]);
+    public static HeroStableGraded Harith { get; } = new(nameof(Harith), new()
+    {
+        CCAmount = 0,
+        CCType = CCType.None,
+        DominatesStage = GameStage.Equal,
+        LaneClear = 1,
+        MetaPoints = 3,
+        ReachingFarEvaluation = 1,
+        TurretDamage = 3,
+        UniqueAbilityPoints = 0,
+        Traits = [HeroTrait.Dashes,],
+        DamageAmount = DamageAmount.Carry_25_40,
+        DamageBlockable = DamageBlockable.Magical,
+        DamageTarget = DamageTarget.Flex,
+    });
     public static HeroStableGraded Harley { get; }
     public static HeroStableGraded Hayabusa { get; }
     public static HeroStableGraded Helcurt { get; }
@@ -89,14 +96,7 @@ public static class Heroes
     public static HeroStableGraded Lolita { get; }
     public static HeroStableGraded Lukas { get; }
     public static HeroStableGraded Lunox { get; }
-    public static HeroStableGraded LuoYi { get; } = new(
-        name: nameof(LuoYi),
-        traits: [
-            HeroTrait.AOEBurst,
-            HeroTrait.LowMobility,
-            HeroTrait.Oneshotable,
-            HeroTrait.GatherCC,
-        ]);
+    public static HeroStableGraded LuoYi { get; }
     public static HeroStableGraded Lylia { get; }
     public static HeroStableGraded Martis { get; }
     public static HeroStableGraded Masha { get; }
@@ -134,27 +134,15 @@ public static class Heroes
     public static HeroStableGraded Vexana { get; }
     public static HeroStableGraded Wanwan { get; }
     public static HeroStableGraded XBorg { get; }
-    public static HeroStableGraded Xavier { get; } = new(
-        name: nameof(Xavier),
-        traits:
-        [
-            HeroTrait.Oneshotable,
-            HeroTrait.InstantCC,
-            HeroTrait.AOEBurst,
-            HeroTrait.Mobility, // sure?
-        ]);
+    public static HeroStableGraded Xavier { get; }
     public static HeroStableGraded YiSunShin { get; }
     public static HeroStableGraded Yin { get; }
     public static HeroStableGraded YuZhong { get; }
     public static HeroStableGraded Yve { get; }
-    public static HeroStableGraded Zhask { get; } = new(
-        name: nameof(Zhask),
-        traits: [
-            HeroTrait.SoloDmg,
-            HeroTrait.Mobility,
-            HeroTrait.Oneshotable,
-            HeroTrait.InstantCC,
-        ]);
+    public static HeroStableGraded Zhask { get; }
     public static HeroStableGraded Zhuxin { get; }
     public static HeroStableGraded Zilong { get; }
+    public static HeroStableGraded[] AllHeroes { get; } = [
+        Aamon, Akai, Aldous, Alice, Alpha, Alucard, Angela, Argus, Arlott, Atlas, Aulus, Aurora, Badang, Balmond, Bane, Barats, Baxia, Beatrix, Belerick, Benedetta, Brody, Bruno, Carmilla, Cecilion, ChangE, Chip, Chou, Cici, Claude, Clint, Cyclops, Diggie, Dyrroth, Edith, Esmeralda, Estes, Eudora, Fanny, Faramis, Floryn, Franco, Fredrinn, Freya, Gatotkaca, Gloo, Gord, Granger, Grock, Guinevere, Gusion, Hanabi, Hanzo, Harith, Harley, Hayabusa, Helcurt, Hilda, Hylos, Irithel, Ixia, Jawhead, Johnson, Joy, Julian, Kadita, Kagura, Kaja, Karina, Karrie, Khaleed, Khufra, Kimmy, Lancelot, LapuLapu, Layla, Leomord, Lesley, Ling, Lolita, Lukas, Lunox, LuoYi, Lylia, Martis, Masha, Mathilda, Melissa, Minotaur, Minsitthar, Miya, Moskov, Nana, Natalia, Natan, Nolan, Novaria, Odette, Paquito, Pharsa, Phoveus, PopolAndKupa, Rafaela, Roger, Ruby, Saber, Selena, Silvanna, Sun, Suyou, Terizla, Thamuz, Tigreal, Uranus, Vale, Valentina, Valir, Vexana, Wanwan, XBorg, Xavier, YiSunShin, Yin, YuZhong, Yve, Zhask, Zhuxin, Zilong
+    ];
 }

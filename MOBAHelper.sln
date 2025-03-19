@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MOBACore", "MOBACore\MOBACore.csproj", "{8CE651D6-FBFC-47A3-8E8F-E7B1FA2DA0D9}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evoloor.MLBBCore", "MLBBCore\Evoloor.MLBBCore.csproj", "{65D3CA9B-F02E-42F0-82F1-C9F60D3EA431}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evoloor.LOLCore", "LOLCore\Evoloor.LOLCore.csproj", "{FB5E4EC9-D726-4B83-B251-AED95551024E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evoloor.MLBBDrafterWebAPp", "Evoloor.MLBBDrafterWebAPp\Evoloor.MLBBDrafterWebAPp.csproj", "{0F534029-34E2-4A21-A212-860FC7E03B0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{FB5E4EC9-D726-4B83-B251-AED95551024E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB5E4EC9-D726-4B83-B251-AED95551024E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB5E4EC9-D726-4B83-B251-AED95551024E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F534029-34E2-4A21-A212-860FC7E03B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F534029-34E2-4A21-A212-860FC7E03B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F534029-34E2-4A21-A212-860FC7E03B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F534029-34E2-4A21-A212-860FC7E03B0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1A4C960-AA85-46AD-944F-C727D6358B74}
 	EndGlobalSection
 EndGlobal

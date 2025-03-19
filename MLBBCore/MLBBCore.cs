@@ -1,66 +1,40 @@
 ﻿using Evoloor.MOBACore;
 namespace Evoloor.MLBBCore;
 
-public abstract class Hero(string name, HeroTrait[] traits) : IStaticData
+public abstract class Hero(string name) : IStaticData
 {
     public string Name { get; init; } = name;
 }
-public class HeroStableGraded : Hero
+public class HeroStableGraded(string name, HeroAttributes attributes) : Hero(name)
 {
-    public HeroStableGraded(string name, HeroTrait[] traits/*TODO: , HeroGrades grades*/)
-        : base(name, traits)
-    {
-        Grades?.CheckForTraitSuggestions(traits);
-    }
-    public HeroAttributes Grades { get; init; }
+    public HeroAttributes Attributes { get; init; } = attributes;
 }
-public class HeroDymanicGraded : Hero
+public class HeroDymanicGraded(
+    string name,
+    Dictionary<Build, HeroAttributes> heroGrades
+    ) 
+    : Hero(name)
 {
-    public HeroDymanicGraded(
-        string name,
-        HeroTrait[] traits,
-        Dictionary<Build, HeroAttributes> heroGrades
-        ) : base(name, traits)
-    {
-        HeroGrades = heroGrades;
-        foreach (var grades in heroGrades.Values)
-            grades?.CheckForTraitSuggestions(traits);
-    }
-    public Dictionary<Build, HeroAttributes> HeroGrades { get; }
+    public Dictionary<Build, HeroAttributes> HeroGrades { get; } = heroGrades;
 }
 public class PowerMetrics
 {
-    public int TurretDamage { get; init; }
-    public int LaneClear { get; init; }
-    public int CCAmount { get; init; }
-    public int ReachingFarEvaluation { get; init; }
-    public int UniqueAbilityPoints { get; init; }
-    public int MetaPoints { get; init; }
-}
-public class TeamPowerMetrics : PowerMetrics
-{
-    public TeamPowerMetrics(HeroAttributes[] teammates)
-    {
-        foreach (var teammate in teammates)
-        {
-            if (teammate.DamageBlockable == DamageBlockable.Physical)
-                PhisDefLikeliness += (int)teammate.DamageAmount;
-            else if (teammate.DamageBlockable == DamageBlockable.Magical)
-                MagicDefLikeliness += (int)teammate.DamageAmount;
-        }
-    }
-    public int PhisDefLikeliness { get; init; }
-    public int MagicDefLikeliness { get; init; }
+    public int TurretDamage { get; set; }
+    public int LaneClear { get; set; }
+    public int CCAmount { get; set; }
+    public int ReachingFarEvaluation { get; set; }
+    public int UniqueAbilityPoints { get; set; }
+    public int MetaPoints { get; set; }
 }
 
 public class HeroAttributes : PowerMetrics
 {
-    public GameStage DominatesStage { get; init; }
-    public DamageAmount DamageAmount { get; init; }
-    public DamageTarget DamageTarget { get; init; }
-    public DamageBlockable DamageBlockable { get; init; }
-    public CCType CCType { get; init; }
-    public HashSet<HeroTrait> Traits { get; init; }
+    public GameStage DominatesStage { get; set; }
+    public DamageAmount DamageAmount { get; set; }
+    public DamageTarget DamageTarget { get; set; }
+    public DamageBlockable DamageBlockable { get; set; }
+    public CCType CCType { get; set; }
+    public HashSet<HeroTrait> Traits { get; set; }
     protected int CountInteractionsBasedOnTraits(HeroAttributes other,
         Func<HeroAttributes, HeroAttributes, bool>[] nonTraitInteractionsRules,
         Func<HeroTrait, HeroAttributes, bool>[]? traitInteractionsRules = null,
@@ -128,12 +102,21 @@ public class HeroAttributes : PowerMetrics
         (HeroTrait.TankShredder, HeroTrait.Tank),
     ];
     public static event Action<HeroTrait, string>? OnTraitSuggested;
-    public void CheckForTraitSuggestions(HeroTrait[] traits)
+}
+public class TeamPowerMetrics : PowerMetrics
+{
+    public TeamPowerMetrics(HeroAttributes[] teammates)
     {
-        /*if (Durability >= 3 &&
-            !(traits.Contains(HeroTrait.HighDurability) || traits.Contains(HeroTrait.TeamHeal)))
-            OnTraitSuggested?.Invoke(HeroTrait.HighDurability, "Живучести много, но не указано, какой");*/
+        foreach (var teammate in teammates)
+        {
+            if (teammate.DamageBlockable == DamageBlockable.Physical)
+                PhisDefLikeliness += (int)teammate.DamageAmount;
+            else if (teammate.DamageBlockable == DamageBlockable.Magical)
+                MagicDefLikeliness += (int)teammate.DamageAmount;
+        }
     }
+    public int PhisDefLikeliness { get; init; }
+    public int MagicDefLikeliness { get; init; }
 }
 public enum GameStage
 {

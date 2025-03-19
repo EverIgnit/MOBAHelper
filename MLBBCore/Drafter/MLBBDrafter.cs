@@ -52,7 +52,7 @@ public class TeamComp
     public DraftedGoldLaner Golder { get; init; }
     public DraftedPlayer[] DraftedPlayers { get; }
 }
-public class TeamGrades : HeroAttributes
+/*public class TeamGrades : HeroAttributes
 {
     public TeamGrades(TeamComp team)
     {
@@ -79,7 +79,7 @@ public class TeamGrades : HeroAttributes
             }
     }
     public TeamTier Tier { get; }
-}
+}*/
 public static class TeamTiers
 {
     // public static TeamTier Imba { get; } = new();
