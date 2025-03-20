@@ -1,0 +1,27 @@
+﻿@page "/weather"
+@if (forecasts is not null)
+{
+  <MudTable Items="forecasts" Hover="true" >
+        <HeaderContent>
+            <MudTh>Date</MudTh>
+            <MudTh>Temp. (C)</MudTh>
+            <MudTh>Summary</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd >@context.Date</MudTd>
+            <MudTd >@context.TemperatureC</MudTd>
+            <MudTd >@context.Summary</MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+
+@code {
+    WeatherForecast[]? forecasts = [new(),new()];
+
+    class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+    }
+}

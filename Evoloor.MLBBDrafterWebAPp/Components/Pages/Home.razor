@@ -1,72 +1,135 @@
-﻿@page "/"
+﻿@page "/h"
 @using System.Collections.Generic
 @using System.Linq
 @using MudBlazor
 @if (heroes is not null)
 {
-    <MudTable Items="@heroes">
+    <MudTable Items="@heroes" Hover=true FixedHeader=true Height="70vh" HorizontalScrollbar=true Dense=true>@* Breakpoint="Breakpoint.MdAndUp"  *@
         <HeaderContent>
-            <MudTd>Name</MudTd>
-            <MudTd>LaneClear</MudTd>
-            <MudTd>CCAmount</MudTd>
-            <MudTd>ReachingFarEvaluation</MudTd>
-            <MudTd>UniqueAbilityPoints</MudTd>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+            <MudTh>Traits</MudTh>
+            <MudTh>Build</MudTh>
+            <MudTh>TurretDamage</MudTh>
+            <MudTh>LaneClear</MudTh>
+            <MudTh>CCAmount</MudTh>
+            <MudTh>ReachingFarEvaluation</MudTh>
+            <MudTh>UniqueAbilityPoints</MudTh>
+            <MudTh>MetaPoints</MudTh>
+            <MudTh>DominatesStage</MudTh>
+            <MudTh>DamageAmount</MudTh>
+            <MudTh>DamageTarget</MudTh>
+            <MudTh>DamageBlockable</MudTh>
+            <MudTh>CCType</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTr>
-                @if (context is not null and {Attributes: not null})
-                {
-                    <MudTd>@context.Name</MudTd>
-
+            @if (context is not null)
+            {
+                <MudTr>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="Traits">1
+                        @* <MudChipSet @bind-SelectedChips="context.Grades.Traits" MultiSelection="true">
+                                @foreach(var trait in Enum.GetValues(typeof(HeroTrait)).Cast<HeroTrait>())
+                                {
+                                    <MudChip Value="trait">@trait</MudChip>
+                                }
+                            </MudChipSet> *@
+                    </MudTd>
                     <MudTd>
-                        @* <MudSelect T="Build" @bind-Value="context.Build" Dense="true">
+                        @* <MudSelect T="Build" @bind-Value="context.Build">
                             @foreach (var build in Enum.GetValues(typeof(Build)).Cast<Build>())
                             {
                                 <MudSelectItem Value="build">@build</MudSelectItem>
                             }
                         </MudSelect> *@
                     </MudTd>
-                    <MudTd>
-                        <MudNumericField T="int" @bind-Value="context.Attributes.TurretDamage" Dense="true" />
-                    </MudTd>
-
-                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.LaneClear" Dense="true" /></MudTd>
-
-                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.CCAmount" Dense="true" /></MudTd>
-
-                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.ReachingFarEvaluation" Dense="true" /></MudTd>
-
-                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.UniqueAbilityPoints" Dense="true" /></MudTd>
-
-                    <MudTd>
-                        @*   <MudSelect T="GameStage" @bind-Value="context.Grades.DominatesStage" Dense="true">
-                        @foreach (var stage in Enum.GetValues(typeof(GameStage)).Cast<GameStage>())
-                        {
-                            <MudSelectItem Value="stage">@stage</MudSelectItem>
-                        }
-                    </MudSelect> *@
-                    </MudTd>
-
-                    <MudTd>
-                        @* <MudSelect T="DamageAmount" @bind-Value="context.Grades.DamageAmount" Dense="true">
-                        @foreach (var dmg in Enum.GetValues(typeof(DamageAmount)).Cast<DamageAmount>())
-                        {
-                            <MudSelectItem Value="dmg">@dmg</MudSelectItem>
-                        }
-                    </MudSelect> *@
-                    </MudTd>
-
-                    <MudTd>
-                        @* <MudChipSet @bind-SelectedChips="context.Grades.Traits" MultiSelection="true" Dense="true">
-                    @foreach(var trait in Enum.GetValues(typeof(HeroTrait)).Cast<HeroTrait>())
+                    @* @if (context.Attributes is not null)
                     {
-                        <MudChip Value="trait">@trait</MudChip>
+                        <MudTd>@context.Attributes.TurretDamage"</MudTd>
+                        <MudTd>@context.Attributes.LaneClear"</MudTd>
+                        <MudTd>@context.Attributes.CCAmount"</MudTd>
+                        <MudTd>@context.Attributes.ReachingFarEvaluation"</MudTd>
+                        <MudTd>@context.Attributes.UniqueAbilityPoints"</MudTd>
+                        <MudTd>@context.Attributes.MetaPoints"</MudTd>
+                        <MudTd>@context.Attributes.DominatesStage"</MudTd>
+                        <MudTd>@context.Attributes.DamageAmount"</MudTd>
+                        <MudTd>@context.Attributes.DamageTarget"</MudTd>
+                        <MudTd>@context.Attributes.DamageBlockable"</MudTd>
+                        <MudTd>@context.Attributes.CCType"</MudTd>
                     }
-                </MudChipSet> *@
+                    else
+                    {
+                        @for (var i = 0; i < 11; i++)
+                        {
+                            <MudTd></MudTd>
+                        }
+                    } *@
+                </MudTr>
+            }
+        </RowTemplate>
+        @* <RowEditingTemplate>
+            <MudTr>
+                <MudTd>@context.Name</MudTd>
+                <MudTd> *@
+                    @* <MudChipSet @bind-SelectedChips="context.Grades.Traits" MultiSelection="true">
+                                @foreach(var trait in Enum.GetValues(typeof(HeroTrait)).Cast<HeroTrait>())
+                                {
+                                    <MudChip Value="trait">@trait</MudChip>
+                                }
+                            </MudChipSet> *@
+                @* </MudTd>
+                <MudTd></MudTd>
+                @if (context.Attributes is not null)
+                {
+                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.TurretDamage" /></MudTd>
+                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.LaneClear" /></MudTd>
+                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.CCAmount" /></MudTd>
+                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.ReachingFarEvaluation" /></MudTd>
+                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.UniqueAbilityPoints" /></MudTd>
+                    <MudTd><MudNumericField T="int" @bind-Value="context.Attributes.MetaPoints" /></MudTd>
+                    <MudTd>
+                        <MudSelect T="GameStage?" @bind-Value="context.Attributes.DominatesStage">
+                            @foreach (var stage in Enum.GetValues(typeof(GameStage)).Cast<GameStage?>())
+                            {
+                                <MudSelectItem Value="stage">@stage</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudTd>
+                    <MudTd>
+                        <MudSelect T="DamageAmount?" @bind-Value="context.Attributes.DamageAmount">
+                            @foreach (var dmg in Enum.GetValues(typeof(DamageAmount)).Cast<DamageAmount?>())
+                            {
+                                <MudSelectItem Value="dmg">@dmg</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudTd>
+                    <MudTd>
+                        <MudSelect T="DamageTarget?" @bind-Value="context.Attributes.DamageTarget">
+                            @foreach (var dmg in Enum.GetValues(typeof(DamageTarget)).Cast<DamageTarget?>())
+                            {
+                                <MudSelectItem Value="dmg">@dmg</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudTd>
+                    <MudTd>
+                        <MudSelect T="DamageBlockable?" @bind-Value="context.Attributes.DamageBlockable">
+                            @foreach (var dmg in Enum.GetValues(typeof(DamageBlockable)).Cast<DamageBlockable?>())
+                            {
+                                <MudSelectItem Value="dmg">@dmg</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudTd>
+                    <MudTd>
+                        <MudSelect T="CCType?" @bind-Value="context.Attributes.CCType">
+                            @foreach (var dmg in Enum.GetValues(typeof(CCType)).Cast<CCType?>())
+                            {
+                                <MudSelectItem Value="dmg">@dmg</MudSelectItem>
+                            }
+                        </MudSelect>
                     </MudTd>
                 }
+                }
             </MudTr>
-        </RowTemplate>
+        </RowEditingTemplate> *@
     </MudTable>
 }
 @code {

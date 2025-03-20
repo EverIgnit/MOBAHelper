@@ -12,29 +12,29 @@ public class HeroStableGraded(string name, HeroAttributes attributes) : Hero(nam
 public class HeroDymanicGraded(
     string name,
     Dictionary<Build, HeroAttributes> heroGrades
-    ) 
+    )
     : Hero(name)
 {
     public Dictionary<Build, HeroAttributes> HeroGrades { get; } = heroGrades;
 }
 public class PowerMetrics
 {
-    public int TurretDamage { get; set; }
-    public int LaneClear { get; set; }
-    public int CCAmount { get; set; }
-    public int ReachingFarEvaluation { get; set; }
-    public int UniqueAbilityPoints { get; set; }
-    public int MetaPoints { get; set; }
+    public int? TurretDamage { get; set; }
+    public int? LaneClear { get; set; }
+    public int? CCAmount { get; set; }
+    public int? ReachingFarEvaluation { get; set; }
+    public int? UniqueAbilityPoints { get; set; }
+    public int? MetaPoints { get; set; }
 }
 
 public class HeroAttributes : PowerMetrics
 {
-    public GameStage DominatesStage { get; set; }
-    public DamageAmount DamageAmount { get; set; }
-    public DamageTarget DamageTarget { get; set; }
-    public DamageBlockable DamageBlockable { get; set; }
-    public CCType CCType { get; set; }
-    public HashSet<HeroTrait> Traits { get; set; }
+    public GameStage? DominatesStage { get; set; }
+    public DamageAmount? DamageAmount { get; set; }
+    public DamageTarget? DamageTarget { get; set; }
+    public DamageBlockable? DamageBlockable { get; set; }
+    public CCType? CCType { get; set; }
+    public IEnumerable<HeroTrait> Traits { get; set; } = new HashSet<HeroTrait>();
     protected int CountInteractionsBasedOnTraits(HeroAttributes other,
         Func<HeroAttributes, HeroAttributes, bool>[] nonTraitInteractionsRules,
         Func<HeroTrait, HeroAttributes, bool>[]? traitInteractionsRules = null,
@@ -58,7 +58,7 @@ public class HeroAttributes : PowerMetrics
     ];
     public static readonly Func<HeroTrait, HeroAttributes, bool>[] traitDominationRules =
     [
-        (HeroTrait strong, HeroAttributes enemy) => strong is HeroTrait.Dashes or HeroTrait.Fast && enemy.CCType == CCType.OAEDodgable,
+        (HeroTrait strong, HeroAttributes enemy) => strong is HeroTrait.Dashes or HeroTrait.Fast && enemy.CCType == MLBBCore.CCType.OAEDodgable,
     ];
     public static readonly Func<HeroAttributes, HeroAttributes, bool>[] nonTraitSynergyRules =
     [
