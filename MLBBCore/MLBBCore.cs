@@ -4,6 +4,7 @@ namespace Evoloor.MLBBCore;
 public abstract class Hero(string name) : IStaticData
 {
     public string Name { get; init; } = name;
+    public string? FileName { get;init; }
 }
 public class HeroStableGraded(string name, HeroAttributes attributes) : Hero(name)
 {

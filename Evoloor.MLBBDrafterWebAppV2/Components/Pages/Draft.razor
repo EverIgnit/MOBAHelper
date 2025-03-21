@@ -1,0 +1,88 @@
+﻿@page "/"
+<MudText Typo="Typo.h3">Драфт</MudText>
+
+<MudPaper Elevation="1">
+    <MudText Typo=Typo.h5>Бан</MudText>
+    <MudAutocomplete T="Hero"
+                     Label="Введите имя героя"
+                     SearchFunc="SearchHeroes"
+                     ToStringFunc="@(x => x?.Name)"
+                     @bind-Value="HeroToBan" />
+    <MudChipSet T="Hero" AllClosable OnClose="@((MudChip<Hero> chip) => RemoveHero(chip.Value, BannedHeroes))">
+        @foreach (Hero hero in BannedHeroes)
+        {
+            <MudChip Value="hero">
+                @hero.Name
+            </MudChip>
+        }
+    </MudChipSet>
+</MudPaper>
+<MudPaper Elevation="1">
+    <MudPaper Elevation="2">
+        <MudText Typo=Typo.h5>Наш пик</MudText>
+        <MudAutocomplete T="Hero"
+                         Label="Введите имя героя"
+                         SearchFunc="SearchHeroes"
+                         ToStringFunc="@(x => x?.Name)"
+                         @bind-Value="HeroToPick" />
+        <MudText Typo=Typo.h5>Пик соперников</MudText>
+        <MudAutocomplete T="Hero"
+                         Label="Введите имя героя"
+                         SearchFunc="SearchHeroes"
+                         ToStringFunc="@(x => x?.Name)"
+                         @bind-Value="HeroForEnemyPick" />
+    </MudPaper>
+    <MudTable T="Hero" Items="OurTeam">
+        <HeaderContent>
+            <MudTh>Наша тима</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>
+                @context?.Name
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</MudPaper>
+@code {
+    Hero? _heroToBan;
+    Hero? HeroToBan
+    {
+        get => _heroToBan;
+        set => _heroToBan = AcceptHeroToList(value, BannedHeroes);
+    }
+    Hero? _heroToPick;
+    Hero? HeroToPick
+    {
+        get => _heroToPick;
+        set => _heroToPick = AcceptHeroToList(value, OurTeam, 5);
+    }
+    Hero? _heroForEnemyPick;
+    Hero? HeroForEnemyPick
+    {
+        get => _heroForEnemyPick;
+        set => _heroForEnemyPick = AcceptHeroToList(value, EnemyTeam, 5);
+    }
+    Hero? AcceptHeroToList(Hero? value, List<Hero> targetList, int maxHeroes = 30)
+    {
+        if (value == null || targetList.Count >= maxHeroes)
+            return null;
+        targetList.Add(value);
+        AvaliableHeroes.Remove(value);
+        return null; // Reset the autocomplete after selection
+    }
+    List<Hero> AvaliableHeroes { get; } = MLBBCore.Heroes.AllHeroes.Cast<Hero>().ToList();
+    List<Hero> BannedHeroes { get; } = [];
+    List<Hero> OurTeam { get; } = new List<Hero>(5);
+    List<Hero> EnemyTeam { get; } = new List<Hero>(5);
+    Task<IEnumerable<Hero>> SearchHeroes(string value, CancellationToken c)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return Task.FromResult(AvaliableHeroes.AsEnumerable());
+        return Task.FromResult(AvaliableHeroes.Where(hero => hero.Name.Contains(value, StringComparison.OrdinalIgnoreCase)));
+    }
+    void RemoveHero(Hero hero, List<Hero> targetList)
+    {
+        targetList.Remove(hero);
+        AvaliableHeroes.Add(hero);
+    }
+}

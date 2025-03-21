@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/heroesstats"
 @using System.Collections.Generic
 @using System.Linq
 @using MudBlazor
@@ -11,7 +11,6 @@
               Hover=true
               FixedHeader=true
               Height="70vh"
-              HorizontalScrollbar=true
               Dense=true
               Style="text-align:center"
               Filter="new Func<HeroStableGraded,bool>(FilterFunc)">
@@ -21,6 +20,7 @@
             <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
         <HeaderContent>
+            <MudTh>Аватар</MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.Traits?.Count())">Черты</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)">Build</MudTableSortLabel></MudTh>
@@ -40,6 +40,12 @@
         <RowTemplate>
             @if (context is not null)
             {
+                <MudTd>
+                    @if(!string.IsNullOrWhiteSpace(context.FileName))
+                    {
+                        <MudImage Src="@(Path.Combine(@"\heroheadsnamed\",context.FileName))" Style="width:50px"/>
+                    }
+                </MudTd>
                 <MudTd>@context.Name</MudTd>
                 @if (context.Attributes is not null)
                 {
@@ -197,7 +203,7 @@
     };
     bool FilterFunc(HeroStableGraded hero)
     {
-        return hero.Name.ToLower().Contains(searchString.ToLower());
+        return hero.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase);
     }
     void ShowTraits(HeroStableGraded hero)
     {
