@@ -25,10 +25,12 @@ public class PowerMetrics
     public int? ReachingFarEvaluation { get; set; }
     public int? UniqueAbilityPoints { get; set; }
     public int? MetaPoints { get; set; }
+    public static int PropsAmount { get; } = 6;
 }
 
 public class HeroAttributes : PowerMetrics
 {
+    public static new int PropsAmount { get; } = 7 + PowerMetrics.PropsAmount;
     public GameStage? DominatesStage { get; set; }
     public DamageAmount? DamageAmount { get; set; }
     public DamageTarget? DamageTarget { get; set; }

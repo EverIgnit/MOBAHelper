@@ -5,14 +5,15 @@
 @if (heroes is not null)
 {
     <MudTable Items="@heroes"
+              CanCancelEdit=true
+              EditTrigger="TableEditTrigger.EditButton"
+              EditButtonPosition="TableEditButtonPosition.StartAndEnd"
               Hover=true
               FixedHeader=true
               Height="70vh"
               HorizontalScrollbar=true
-              CanCancelEdit=true
               Dense=true
-              EditTrigger="TableEditTrigger.EditButton"
-              EditButtonPosition="TableEditButtonPosition.StartAndEnd"
+              Style="text-align:center"
               Filter="new Func<HeroStableGraded,bool>(FilterFunc)">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Всего @heroes.Count героев</MudText>
@@ -22,19 +23,19 @@
         <HeaderContent>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.Traits?.Count())">Черты</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)"></MudTableSortLabel>Build</MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)">Пушер</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.LaneClear)">Крип-Деф</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.CCAmount)">Контроль</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.ReachingFarEvaluation)">Далеко ли дотянется</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.UniqueAbilityPoints)">Остальное</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.MetaPoints)">Мета поинтов</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)">Build</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)">Пуш</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.LaneClear)">Крип-Деф</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.CCAmount)">Контроль</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.ReachingFarEvaluation)">Далеко ли дотянется</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.UniqueAbilityPoints)">Остальное</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.MetaPoints)">Мета поинтов</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DominatesStage)">Стадия игры</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DamageAmount)">Урон</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DamageAmount)">Распределение урона</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DamageBlockable)">Контрится бронёй</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.CCType)">Тип контроля</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh>
+            @* <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh> *@
         </HeaderContent>
         <RowTemplate>
             @if (context is not null)
@@ -42,22 +43,29 @@
                 <MudTd>@context.Name</MudTd>
                 @if (context.Attributes is not null)
                 {
-                <MudTd>
-                    <MudChipSet T="HeroTrait" Color="Color.Primary" ReadOnly=true>
-                        @foreach (var trait in context.Attributes.Traits)
+                    <MudTd>
+                        @if (context.Attributes.Traits?.Any() is true)
                         {
-                            <MudChip Value="trait">@trait</MudChip>
+                            <MudChip T="HeroTrait" Color="Color.Primary">@context.Attributes.Traits.First()</MudChip>
+                            @if (context.Attributes.Traits.Count() is > 1)
+                            {
+                                <MudButton Variant="Variant.Text"
+                                           Size="Size.Small"
+                                           OnClick="@(() => ShowTraits(context))">
+                                    и ещё @(context.Attributes.Traits.Count() - 1)
+                                </MudButton>
+
+                            }
                         }
-                    </MudChipSet>
-                </MudTd>
-                <MudTd>
-                    @* <MudSelect T="Build" @bind-Value="context.Build">
+                    </MudTd>
+                    <MudTd>
+                        @* <MudSelect T="Build" @bind-Value="context.Build">
                             @foreach (var build in Enum.GetValues(typeof(Build)).Cast<Build>())
                             {
                                 <MudSelectItem Value="build">@build</MudSelectItem>
                             }
                         </MudSelect> *@
-                </MudTd>
+                    </MudTd>
                     <MudTd>@context.Attributes.TurretDamage</MudTd>
                     <MudTd>@context.Attributes.LaneClear</MudTd>
                     <MudTd>@context.Attributes.CCAmount</MudTd>
@@ -67,7 +75,7 @@
                     <MudTd>@context.Attributes.DominatesStage</MudTd>
                     @if (context.Attributes.DamageAmount is DamageAmount da)
                     {
-                        @if (damageAmountDisplayNames?.TryGetValue(da,out string? damageAmountDisplayText) is true)
+                        @if (damageAmountDisplayNames?.TryGetValue(da, out string? damageAmountDisplayText) is true)
                         {
                             <MudTd>@damageAmountDisplayText</MudTd>
                         }
@@ -82,20 +90,35 @@
                 }
                 else
                 {
-                    @for (var i = 0; i < 13; i++)
+                    @for (var i = 0; i < HeroAttributes.PropsAmount + 1; i++)
                     {
                         <MudTd></MudTd>
                     }
                 }
-                <MudTd>@context.Name</MudTd>
+                @* <MudTd>@context.Name</MudTd> *@
             }
         </RowTemplate>
+        <ChildRowContent>
+            @if (showDetails[context])
+            {
+                <MudTr Editable=false>
+                    <td colspan="@HeroAttributes.PropsAmount">
+                        <MudChipSet T="HeroTrait" Color="Color.Primary" ReadOnly=true Class="d-flex">
+                            @foreach (var trait in context.Attributes.Traits)
+                            {
+                                <MudChip Value="trait">@trait</MudChip>
+                            }
+                        </MudChipSet>
+                    </td>
+                </MudTr>
+            }
+        </ChildRowContent>
         <RowEditingTemplate>
             <MudTd>@context.Name</MudTd>
             @if (context.Attributes is not null)
             {
                 <MudTd>
-                    <MudSelect T="HeroTrait" FullWidth=true MultiSelection=true @bind-SelectedValues="context.Attributes.Traits">
+                    <MudSelect T="HeroTrait" RelativeWidth=DropdownWidth.Adaptive MultiSelection=true @bind-SelectedValues="context.Attributes.Traits">
                         @foreach (var trait in Enum.GetValues(typeof(HeroTrait)).Cast<HeroTrait>())
                         {
                             <MudSelectItem Value="trait">@trait.ToString()</MudSelectItem>
@@ -110,7 +133,7 @@
                 <MudTd><MudNumericField Min=0 Max=3 T="int?" @bind-Value="context.Attributes.UniqueAbilityPoints" /></MudTd>
                 <MudTd><MudNumericField Min=0 Max=3 T="int?" @bind-Value="context.Attributes.MetaPoints" /></MudTd>
                 <MudTd>
-                    <MudSelect FullWidth=true T="GameStage?" @bind-Value="context.Attributes.DominatesStage">
+                    <MudSelect RelativeWidth=DropdownWidth.Adaptive T="GameStage?" @bind-Value="context.Attributes.DominatesStage">
                         @foreach (var option in Enum.GetValues(typeof(GameStage)).Cast<GameStage?>())
                         {
                             <MudSelectItem Value="option">@option</MudSelectItem>
@@ -118,7 +141,7 @@
                     </MudSelect>
                 </MudTd>
                 <MudTd>
-                    <MudSelect T="DamageAmount?" @bind-Value="context.Attributes.DamageAmount">
+                    <MudSelect RelativeWidth=DropdownWidth.Adaptive T="DamageAmount?" @bind-Value="context.Attributes.DamageAmount">
                         @foreach (var option in Enum.GetValues(typeof(DamageAmount)).Cast<DamageAmount?>())
                         {
                             <MudSelectItem Value="option">@option</MudSelectItem>
@@ -126,7 +149,7 @@
                     </MudSelect>
                 </MudTd>
                 <MudTd>
-                    <MudSelect T="DamageTarget?" @bind-Value="context.Attributes.DamageTarget">
+                    <MudSelect RelativeWidth=DropdownWidth.Adaptive T="DamageTarget?" @bind-Value="context.Attributes.DamageTarget">
                         @foreach (var option in Enum.GetValues(typeof(DamageTarget)).Cast<DamageTarget?>())
                         {
                             <MudSelectItem Value="option">@option</MudSelectItem>
@@ -134,7 +157,7 @@
                     </MudSelect>
                 </MudTd>
                 <MudTd>
-                    <MudSelect T="DamageBlockable?" @bind-Value="context.Attributes.DamageBlockable">
+                    <MudSelect RelativeWidth=DropdownWidth.Adaptive T="DamageBlockable?" @bind-Value="context.Attributes.DamageBlockable">
                         @foreach (var option in Enum.GetValues(typeof(DamageBlockable)).Cast<DamageBlockable?>())
                         {
                             <MudSelectItem Value="option">@option</MudSelectItem>
@@ -142,7 +165,7 @@
                     </MudSelect>
                 </MudTd>
                 <MudTd>
-                    <MudSelect T="CCType?" @bind-Value="context.Attributes.CCType">
+                    <MudSelect RelativeWidth=DropdownWidth.Adaptive T="CCType?" @bind-Value="context.Attributes.CCType">
                         @foreach (var option in Enum.GetValues(typeof(CCType)).Cast<CCType?>())
                         {
                             <MudSelectItem Value="option">@option</MudSelectItem>
@@ -150,13 +173,21 @@
                     </MudSelect>
                 </MudTd>
             }
-            <MudTd>@context.Name</MudTd>
+            else
+            {
+                @for (var i = 0; i < HeroAttributes.PropsAmount + 1; i++)
+                {
+                    <MudTd></MudTd>
+                }
+            }
+            @* <MudTd>@context.Name</MudTd> *@
         </RowEditingTemplate>
     </MudTable>
 }
 @code {
     string searchString = "";
     List<HeroStableGraded> heroes = Heroes.AllHeroes.ToList();
+    Dictionary<HeroStableGraded, bool> showDetails = Heroes.AllHeroes.ToDictionary(Hero => Hero, _ => false);
     Dictionary<DamageAmount, string> damageAmountDisplayNames = new()
     {
         {DamageAmount.Carry_25_40, "Керри (25-40%)"},
@@ -167,5 +198,9 @@
     bool FilterFunc(HeroStableGraded hero)
     {
         return hero.Name.ToLower().Contains(searchString.ToLower());
+    }
+    void ShowTraits(HeroStableGraded hero)
+    {
+        showDetails[hero] = !showDetails[hero];
     }
 }
