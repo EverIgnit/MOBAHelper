@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MOBACore\MOBACore.csproj" />
+    <ProjectReference Include="..\MOBACore\Evoloor.MOBACore.csproj" />
   </ItemGroup>
 
 </Project>
