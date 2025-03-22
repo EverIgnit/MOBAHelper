@@ -4,7 +4,9 @@ namespace Evoloor.MLBBCore;
 public abstract class Hero(string name) : IStaticData
 {
     public string Name { get; init; } = name;
-    public string? FileName { get;init; }
+    protected string? _fileName;
+    public string? FileName { protected get => _fileName; set { if (value is null) return; FileRelativePath = Path.Combine(@"\heroheadsnamed\", value); _fileName = value; } }
+    public string? FileRelativePath { get; protected set; }
 }
 public class HeroStableGraded(string name, HeroAttributes attributes) : Hero(name)
 {

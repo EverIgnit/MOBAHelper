@@ -41,9 +41,9 @@
             @if (context is not null)
             {
                 <MudTd>
-                    @if(!string.IsNullOrWhiteSpace(context.FileName))
+                    @if(!string.IsNullOrWhiteSpace(context.FileRelativePath))
                     {
-                        <MudImage Src="@(Path.Combine(@"\heroheadsnamed\",context.FileName))" Style="width:50px"/>
+                        <MudImage Src="@(context.FileRelativePath)" Style="width:50px"/>
                     }
                 </MudTd>
                 <MudTd>@context.Name</MudTd>
@@ -120,6 +120,12 @@
             }
         </ChildRowContent>
         <RowEditingTemplate>
+            <MudTd>
+                @if (!string.IsNullOrWhiteSpace(context.FileRelativePath))
+                {
+                    <MudImage Src="@(context.FileRelativePath)" Style="width:50px" />
+                }
+            </MudTd>
             <MudTd>@context.Name</MudTd>
             @if (context.Attributes is not null)
             {

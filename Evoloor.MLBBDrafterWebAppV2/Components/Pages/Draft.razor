@@ -1,67 +1,98 @@
 ﻿@page "/"
-<MudText Typo="Typo.h3">Драфт</MudText>
+<MudText Class="mb-10" Typo="Typo.h3" Align="Align.Center">Драфт</MudText>
 
-<MudPaper Elevation="1">
-    <MudText Typo=Typo.h5>Бан</MudText>
-    <MudAutocomplete T="Hero"
-                     Label="Введите имя героя"
-                     SearchFunc="SearchHeroes"
-                     ToStringFunc="@(x => x?.Name)"
-                     @bind-Value="HeroToBan" />
-    <MudChipSet T="Hero" AllClosable OnClose="@((MudChip<Hero> chip) => RemoveHero(chip.Value, BannedHeroes))">
-        @foreach (Hero hero in BannedHeroes)
-        {
-            <MudChip Value="hero">
-                @hero.Name
-            </MudChip>
-        }
-    </MudChipSet>
-</MudPaper>
-<MudPaper Elevation="1">
-    <MudPaper Elevation="2">
-        <MudText Typo=Typo.h5>Наш пик</MudText>
+<MudContainer Class="d-flex justify-space-between" MaxWidth="MaxWidth.ExtraLarge">
+    <MudContainer MaxWidth="MaxWidth.ExtraSmall">
         <MudAutocomplete T="Hero"
-                         Label="Введите имя героя"
+                         Label="Пинкуть"
+                         Dense=true
+                         Placeholder="Введите имя героя"
                          SearchFunc="SearchHeroes"
                          ToStringFunc="@(x => x?.Name)"
                          @bind-Value="HeroToPick" />
-        <MudText Typo=Typo.h5>Пик соперников</MudText>
+        <MudText Typo="Typo.h3" Class="mt-10" Align="Align.Center">Наша тима</MudText>
+        <MudTable T="Hero" Items="OurTeam">
+            <RowTemplate>
+                <MudTd Class="d-flex justify-center">
+                    <MudButton OnClick="()=>RemoveHero(context, OurTeam)">
+                        <MudImage Src=@context.FileRelativePath Height="75"></MudImage>
+                        <MudIcon Icon=@Icons.Material.Filled.Cancel Size="Size.Large" />
+                    </MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudContainer>
+    <MudContainer Class="d-flex">
+        <MudChipSet Class="flex-1" T="Hero" AllClosable OnClose="@((MudChip<Hero> chip) => RemoveHero(chip.Value, BannedHeroes))">
+            @foreach (Hero hero in BannedHeroes.Take(BannedHeroes.Count / 2))
+            {
+                <MudChip Value="hero">
+                    <MudImage Src=@hero.FileRelativePath Style="width:50px"></MudImage>
+                </MudChip>
+            }
+        </MudChipSet>
+        <MudContainer Class="flex-1">
+            <MudAutocomplete T="Hero"
+                             Label="Забанить"
+                             Placeholder="Введите имя героя"
+                             SearchFunc="SearchHeroes"
+                             ToStringFunc="@(x => x?.Name)"
+                             @bind-Value="HeroToBan" />
+            <MudText Typo=Typo.h5 Align="Align.Center">Баны</MudText>
+        </MudContainer>
+        <MudChipSet Class="flex-1" T="Hero" AllClosable OnClose="@((MudChip<Hero> chip) => RemoveHero(chip.Value, BannedHeroes))">
+            @foreach (Hero hero in BannedHeroes.Skip(BannedHeroes.Count / 2))
+            {
+                <MudChip Value="hero">
+                    <MudImage Src=@hero.FileRelativePath Style="width:50px"></MudImage>
+                </MudChip>
+            }
+        </MudChipSet>
+    </MudContainer>
+    <MudContainer MaxWidth="MaxWidth.ExtraSmall">
         <MudAutocomplete T="Hero"
-                         Label="Введите имя героя"
+                         Label="Пинкуть"
+                         Dense=true
+                         Placeholder="Введите имя героя"
                          SearchFunc="SearchHeroes"
                          ToStringFunc="@(x => x?.Name)"
                          @bind-Value="HeroForEnemyPick" />
-    </MudPaper>
-    <MudTable T="Hero" Items="OurTeam">
-        <HeaderContent>
-            <MudTh>Наша тима</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd>
-                @context?.Name
-            </MudTd>
-        </RowTemplate>
-    </MudTable>
-</MudPaper>
+        <MudText Typo="Typo.h3" Class="mt-10" Align="Align.Center">Соперники</MudText>
+        <MudTable T="Hero" Items="EnemyTeam">
+            <RowTemplate>
+                <MudTd Class="d-flex justify-center">
+                    <MudButton OnClick="()=>RemoveHero(context, EnemyTeam)">
+                        <MudImage Src=@context.FileRelativePath Height="75"></MudImage>
+                        <MudIcon Icon=@Icons.Material.Filled.Cancel Size="Size.Large" />
+                    </MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
 @code {
+    HashSet<Hero> AvaliableHeroes { get; } = new(MLBBCore.Heroes.AllHeroes.Cast<Hero>());
     Hero? _heroToBan;
     Hero? HeroToBan
     {
         get => _heroToBan;
         set => _heroToBan = AcceptHeroToList(value, BannedHeroes);
     }
+    List<Hero> BannedHeroes { get; } = [];
     Hero? _heroToPick;
     Hero? HeroToPick
     {
         get => _heroToPick;
         set => _heroToPick = AcceptHeroToList(value, OurTeam, 5);
     }
+    List<Hero> OurTeam { get; } = new List<Hero>(5);
     Hero? _heroForEnemyPick;
     Hero? HeroForEnemyPick
     {
         get => _heroForEnemyPick;
         set => _heroForEnemyPick = AcceptHeroToList(value, EnemyTeam, 5);
     }
+    List<Hero> EnemyTeam { get; } = new List<Hero>(5);
     Hero? AcceptHeroToList(Hero? value, List<Hero> targetList, int maxHeroes = 30)
     {
         if (value == null || targetList.Count >= maxHeroes)
@@ -70,10 +101,6 @@
         AvaliableHeroes.Remove(value);
         return null; // Reset the autocomplete after selection
     }
-    List<Hero> AvaliableHeroes { get; } = MLBBCore.Heroes.AllHeroes.Cast<Hero>().ToList();
-    List<Hero> BannedHeroes { get; } = [];
-    List<Hero> OurTeam { get; } = new List<Hero>(5);
-    List<Hero> EnemyTeam { get; } = new List<Hero>(5);
     Task<IEnumerable<Hero>> SearchHeroes(string value, CancellationToken c)
     {
         if (string.IsNullOrWhiteSpace(value))
