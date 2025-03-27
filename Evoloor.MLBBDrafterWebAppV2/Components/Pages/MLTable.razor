@@ -13,7 +13,7 @@
               Height="70vh"
               Dense=true
               Style="text-align:center"
-              Filter="new Func<HeroStableGraded,bool>(FilterFunc)">
+              Filter="new Func<HeroSimpleGraded,bool>(FilterFunc)">
         <ToolBarContent>
             <MudText Typo="Typo.h6">Всего @heroes.Count героев</MudText>
             <MudSpacer />
@@ -21,20 +21,20 @@
         </ToolBarContent>
         <HeaderContent>
             <MudTh>Аватар</MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.Traits?.Count())">Черты</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)">Build</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.TurretDamage)">Пуш</MudTableSortLabel></MudTh>
-            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.LaneClear)">Крип-Деф</MudTableSortLabel></MudTh>
-            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.CCAmount)">Контроль</MudTableSortLabel></MudTh>
-            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.ReachingFarEvaluation)">Далеко ли дотянется</MudTableSortLabel></MudTh>
-            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.UniqueAbilityPoints)">Остальное</MudTableSortLabel></MudTh>
-            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.MetaPoints)">Мета поинтов</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DominatesStage)">Стадия игры</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DamageAmount)">Урон</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DamageAmount)">Распределение урона</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.DamageBlockable)">Контрится бронёй</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object?>(x=>x.Attributes?.CCType)">Тип контроля</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.Traits?.Count())">Черты</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.TurretDamage)">Build</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.TurretDamage)">Пуш</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.LaneClear)">Крип-Деф</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.CCAmount)">Контроль</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.ReachingFarEvaluation)">Далеко ли дотянется</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.UniqueAbilityPoints)">Остальное</MudTableSortLabel></MudTh>
+            <MudTh Style="writing-mode:vertical-lr;text-align:right"><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.MetaPoints)">Мета поинтов</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.DominatesStage)">Стадия игры</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.DamageAmount)">Урон</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.DamageAmount)">Распределение урона</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.DamageBlockable)">Контрится бронёй</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<HeroSimpleGraded, object?>(x=>x.Attributes?.CCType)">Тип контроля</MudTableSortLabel></MudTh>
             @* <MudTh><MudTableSortLabel SortBy="new Func<HeroStableGraded, object>(x=>x.Name)">Герой</MudTableSortLabel></MudTh> *@
         </HeaderContent>
         <RowTemplate>
@@ -79,12 +79,12 @@
                     <MudTd>@context.Attributes.UniqueAbilityPoints</MudTd>
                     <MudTd>@context.Attributes.MetaPoints</MudTd>
                     <MudTd>@context.Attributes.DominatesStage</MudTd>
-                    @if (context.Attributes.DamageAmount is DamageAmount da)
+                    @if (false){@* (context.Attributes.DamageAmount is DamageAmount da)
                     {
                         @if (damageAmountDisplayNames?.TryGetValue(da, out string? damageAmountDisplayText) is true)
                         {
                             <MudTd>@damageAmountDisplayText</MudTd>
-                        }
+                        } *@
                     }
                     else
                     {
@@ -96,7 +96,7 @@
                 }
                 else
                 {
-                    @for (var i = 0; i < HeroAttributes.PropsAmount + 1; i++)
+                    @for (var i = 0; i < HeroAttributes.MetricsAmount + 1; i++)
                     {
                         <MudTd></MudTd>
                     }
@@ -108,7 +108,7 @@
             @if (showDetails[context])
             {
                 <MudTr Editable=false>
-                    <td colspan="@HeroAttributes.PropsAmount">
+                    <td colspan="@HeroAttributes.MetricsAmount">
                         <MudChipSet T="HeroTrait" Color="Color.Primary" ReadOnly=true Class="d-flex">
                             @foreach (var trait in context.Attributes.Traits)
                             {
@@ -153,12 +153,12 @@
                     </MudSelect>
                 </MudTd>
                 <MudTd>
-                    <MudSelect RelativeWidth=DropdownWidth.Adaptive T="DamageAmount?" @bind-Value="context.Attributes.DamageAmount">
+                    @* <MudSelect RelativeWidth=DropdownWidth.Adaptive T="DamageAmount?" @bind-Value="context.Attributes.DamageAmount">
                         @foreach (var option in Enum.GetValues(typeof(DamageAmount)).Cast<DamageAmount?>())
                         {
                             <MudSelectItem Value="option">@option</MudSelectItem>
                         }
-                    </MudSelect>
+                    </MudSelect> *@
                 </MudTd>
                 <MudTd>
                     <MudSelect RelativeWidth=DropdownWidth.Adaptive T="DamageTarget?" @bind-Value="context.Attributes.DamageTarget">
@@ -187,7 +187,7 @@
             }
             else
             {
-                @for (var i = 0; i < HeroAttributes.PropsAmount + 1; i++)
+                @for (var i = 0; i < HeroAttributes.MetricsAmount + 1; i++)
                 {
                     <MudTd></MudTd>
                 }
@@ -198,8 +198,8 @@
 }
 @code {
     string searchString = "";
-    List<HeroStableGraded> heroes = Heroes.AllHeroes.ToList();
-    Dictionary<HeroStableGraded, bool> showDetails = Heroes.AllHeroes.ToDictionary(Hero => Hero, _ => false);
+    List<HeroSimpleGraded> heroes = Heroes.AllHeroes.ToList();
+    Dictionary<HeroSimpleGraded, bool> showDetails = Heroes.AllHeroes.ToDictionary(Hero => Hero, _ => false);
     Dictionary<DamageAmount, string> damageAmountDisplayNames = new()
     {
         {DamageAmount.Carry_25_40, "Керри (25-40%)"},
@@ -207,11 +207,11 @@
         {DamageAmount.Normal_11_17, "Норм (11-17%)"},
         {DamageAmount.Low_10, "Мало (<10%)"},
     };
-    bool FilterFunc(HeroStableGraded hero)
+    bool FilterFunc(HeroSimpleGraded hero)
     {
         return hero.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase);
     }
-    void ShowTraits(HeroStableGraded hero)
+    void ShowTraits(HeroSimpleGraded hero)
     {
         showDetails[hero] = !showDetails[hero];
     }
